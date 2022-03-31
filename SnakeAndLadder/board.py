@@ -51,12 +51,22 @@ class Board:
         print("Player " + str(player_id) + " moved from " + str(self.players[player_id].position) + " to " + str(newPosition))
         self.players[player_id].position = newPosition
 
-    def addPlayer(self, position):
+    def addPlayer(self, position=1):
         self.playerId += 1
         self.players[self.playerId] = Player(position)
 
+    def playGame(self):
+        while not self.endOfGame:
+            for player in self.players:
+                self.rollDice(player)
+                if self.endOfGame:
+                    print("winner is " + str(b.winner))
+                    break
+        
+
 class Player:
-    def __init__(self, start):
+    #take start default parameter as 1
+    def __init__(self, start=1):
         self.position = start
 
 class Dice:
@@ -67,14 +77,8 @@ class Dice:
 
 
 b = Board(100)
-b.addPlayer(1)
-b.addPlayer(1)
-b.addPlayer(1)
+b.addPlayer()
+b.addPlayer()
+b.addPlayer()
 
-#this loop should go into b.playGame()
-while not b.endOfGame:
-    for player in b.players:
-        b.rollDice(player)
-        if b.endOfGame:
-            print("winner is " + str(b.winner))
-            break
+b.playGame()
